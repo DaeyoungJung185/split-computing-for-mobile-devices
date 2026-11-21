@@ -1,6 +1,6 @@
 function schedule = select_split_points(cost, state, scenario, splitCandidates)
 % Choose split points for one cycle using the search order in Algorithm 1.
-% Adapted from S001_PA_het.m. Stage columns are local, uplink, and edge.
+% Stage columns are local, uplink, and edge.
 % Server availability and edge queue timestamps are absolute milliseconds.
 
     deviceCount = size(cost.localMs, 1);

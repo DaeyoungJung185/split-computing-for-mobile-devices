@@ -1,4 +1,4 @@
-% Small numerical example using the VGG-19 measurements in the TSC archive.
+% Numerical example using the bundled VGG-19 layer profiles.
 sampleFolder = fileparts(mfilename('fullpath'));
 profile = readmatrix(fullfile(sampleFolder, 'data', 'vgg19_profiles.csv'));
 
@@ -16,7 +16,7 @@ parameterCount = profile(:, 6);
 cost.localMs = cumsum(cpuMs(:, cpuProfile), 1).';
 cost.edgeMsBySplit = [flipud(cumsum(flipud(gpuMs(2:end)))); 0].';
 
-% Device-side energy model from parameter.m and S001_PA_het.m.
+% Device-side computation and memory energy from the layer profiles.
 joulesPerMac = 4.5e-11;
 joulesPerParameterBit = 1.3e-8;
 layerEnergyJ = (joulesPerMac * macCount) * cpuEnergyScale(cpuProfile) ...
