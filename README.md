@@ -1,12 +1,16 @@
 # Split Computing for Mobile Devices: Energy and Latency Perspective
 
-This repository contains a MATLAB numerical simulation of the split-point selection heuristic in Algorithm 1 of [1].
+This repository contains a MATLAB numerical simulation of queue-aware split-point selection for mobile edge inference (Algorithm 1 in [1]).
 
 ## Run the example
 
-Open the repository folder in MATLAB and run `demo_split_computing`. The example uses base MATLAB and compares adaptive split selection with fully local inference for three devices over eight inference cycles. It prints the sampled uplink rates, selected split points, and summary metrics.
+Download or clone the repository, open its folder in MATLAB, and run the demo.
 
-The following results were verified in MATLAB R2026a. Each mean is over the 24 requests in that policy's run.
+```matlab
+demo_split_computing
+```
+
+The demo uses base MATLAB and compares adaptive split selection with fully local inference on three devices over eight inference cycles. The table shows MATLAB R2026a results averaged over 24 requests per policy.
 
 | Policy | Mean inference latency (ms) | Mean device energy (J) |
 | --- | ---: | ---: |
@@ -15,9 +19,9 @@ The following results were verified in MATLAB R2026a. Each mean is over the 24 r
 
 ## Split selection and queues
 
-Each cycle, the heuristic processes devices in order of increasing residual energy. It scores each feasible split using the normalized mean latency and energy of the current device and those already assigned. It commits the best split and its queue updates before moving to the next device. [Split-selection code](select_split_points.m)
+Each cycle, the heuristic processes devices in order of increasing residual energy. It scores each feasible split using a weighted sum of normalized mean latency and energy across the current device and those already assigned. It commits the best split and its queue updates before moving to the next device. [Split-selection code](select_split_points.m)
 
-The simulator carries unfinished local, uplink, and edge work across cycles. The shared edge server serves requests in arrival order, and device energy is updated after each cycle. [Simulation code](simulate_split_computing.m)
+The simulator carries unfinished local, uplink, and edge work across cycles. The shared edge server serves requests in arrival order. The simulator deducts energy use from each device's remaining budget after each cycle. [Simulation code](simulate_split_computing.m)
 
 ## Input data and uplink model
 
